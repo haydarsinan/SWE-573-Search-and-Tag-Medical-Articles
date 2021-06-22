@@ -1,0 +1,82 @@
+{% extends 'searchAndTag/base.html' %}
+
+{% block searchResultPage %}
+   <br><br>
+    <h2 style="color:blue;"align="center">Search and Tag Medical Articles about Breast Cancer</h2>
+<br><br>
+      <form class="d-flex" method=POST>
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search Article" aria-label="Search" name="searched">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+    <div style="text-align: center;">
+        <h1>
+            <br>
+
+            {% if searched %}
+                <h2>You searched for: "{{ searched }}"</h2>
+
+                {% for article in articleResult %}
+
+    <div class="card">
+      <div class="card-header">
+        PubMed ID: <strong>{{ article.PubmedID }}</strong>
+      </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ article.Title }}</h5>
+
+            <p class="card-text">
+                    <Strong>Authors: </Strong>
+                        {% for author in article.Authors.all %}
+                            {{ author.Name }} {{ author.Surname }},
+                        {% endfor %}
+                    <br>
+                    <Strong>Keywords: </Strong>
+                        {% for keyword in article.Keywords.all %}
+                            {{ keyword.Keyword }},
+                        {% endfor %}
+                    <br>
+                    <Strong>DOI: </Strong>{{ article.Doi }}
+            </p>
+            <a href="{% url 'articlepage' article.id %}" class="btn btn-primary">Go To Article</a>
+        </div>
+    </div>
+    <br>
+                {% endfor %}
+
+            {% else %}
+                <h3>You should search with a "Medical Term", then you can tag.</h3>
+            {% endif %}
+        </h1>
+
+    </div>
+
+
+{#    {% for articleV in article %}#}
+{#    <div class="card">#}
+{#      <div class="card-header">#}
+{#        PubMed ID: <strong>{{ articleV.PubmedID }}</strong>#}
+{#      </div>#}
+{#        <div class="card-body">#}
+{#            <h5 class="card-title">{{ articleV.Title }}</h5>#}
+{##}
+{#            <p class="card-text">#}
+{#                    <Strong>Authors: </Strong>#}
+{#                        {% for author in articleV.Authors.all %}#}
+{#                            {{ author }},#}
+{#                        {% endfor %}#}
+{#                    <br>#}
+{#                    <Strong>Keywords: </Strong>#}
+{#                        {% for keyword in articleV.Keywords.all %}#}
+{#                            {{ keyword }},#}
+{#                        {% endfor %}#}
+{#                    <br>#}
+{#                    <Strong>DOI: </Strong>{{ articleV.Doi }}#}
+{#            </p>#}
+{#            <a href="#" class="btn btn-primary">Go To Article</a>#}
+{#        </div>#}
+{#    </div>#}
+{#    {% endfor %}#}
+
+{% endblock %}

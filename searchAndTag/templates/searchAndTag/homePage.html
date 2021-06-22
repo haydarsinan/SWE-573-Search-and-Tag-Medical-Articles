@@ -1,0 +1,13 @@
+{% extends 'searchAndTag/base.html' %}
+
+{% block homePage %}
+    <br>
+    <h1 style="color: blue" align="center">Welcome to Search and Tag Medical article Page</h1>
+    <br><br>
+    <p align="center">This page is designed for searching medical articles and tagging them with Wikidata items.
+    There is 45.000 articles in the database. Articles are about "Breast Cancer" fetched from PubMed.
+    </p>
+    <center>
+        <a href="{% url 'searchpage' %}">Lets Start to Search and Tag</a>
+    </center>
+{% endblock %}

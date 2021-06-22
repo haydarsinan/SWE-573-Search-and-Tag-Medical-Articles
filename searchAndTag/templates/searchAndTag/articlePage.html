@@ -1,0 +1,43 @@
+{% extends 'searchAndTag/base.html' %}
+
+{% block articlePage %}
+
+{#    <a href="{% url 'articlepage' %}">Click here</a>#}
+
+    <div class="card">
+      <div class="card-body">
+          {% for articleV in article %}
+            <h5 class="card-title">{{ articleV.Title }}</h5>
+            <p class="card-text"><br>
+
+                    <Strong>Abstract: </Strong>
+                        {{ articleV.Abstract }}
+                    <br><br>
+                    <Strong>Authors: </Strong>
+                        {% for author in articleV.Authors.all %}
+                            {{ author.Name }} {{ author.Surname }},
+                        {% endfor %}
+                    <br>
+                    <Strong>Keywords: </Strong>
+                        {% for keyword in articleV.Keywords.all %}
+                            {{ keyword.Keyword }},
+                        {% endfor %}
+                    <br>
+                    <Strong>PubMed ID: </Strong>
+                        {{ articleV.PubmedID }}
+                    <br>
+                    <Strong>DOI: </Strong>{{ articleV.Doi }}
+                    <br><br>
+                    <Strong>Tags: </Strong>
+                        {% for tag in articleV.Tags.all %}
+                            <a href="{{ tag.Link }}">{{ tag.Tag }}</a>,
+                        {% endfor %} <br><br>
+               <a href="{% url 'taggingpage' articleV.id %}" class="btn btn-primary" >Tag the Article</a>
+                {% endfor %}
+            </p>
+
+      </div>
+    </div>
+
+{% endblock %}
+
